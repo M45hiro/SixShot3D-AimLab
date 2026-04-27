@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valorant Style 3D Aim Trainer</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="crosshair" class="crosshair"></div>
+
+    <div id="hud" class="hud">
+      <div class="hud-card">
+        <span>时间</span>
+        <strong id="timeText">60.0</strong>
+      </div>
+      <div class="hud-card">
+        <span>分数</span>
+        <strong id="scoreText">0</strong>
+      </div>
+      <div class="hud-card">
+        <span>连击</span>
+        <strong id="comboText">0</strong>
+      </div>
+      <div class="hud-card">
+        <span>命中率</span>
+        <strong id="accuracyText">0%</strong>
+      </div>
+    </div>
+
+    <aside class="settings-panel">
+      <div class="panel-header">
+        <h1>3D Aim Trainer</h1>
+        <p>Valorant Style Sensitivity</p>
+      </div>
+
+      <section class="setting-group">
+        <h2>游戏</h2>
+
+        <button id="startBtn" class="primary-btn">开始训练</button>
+        <button id="restartBtn" class="secondary-btn">重新开始</button>
+
+        <p id="statusText" class="status-text">
+          点击开始后，鼠标会被锁定。按 ESC 可释放鼠标。
+        </p>
+      </section>
+
+      <section class="setting-group">
+        <h2>灵敏度</h2>
+
+        <label class="setting-row">
+          <span>Valorant Sens</span>
+          <input
+            id="sensitivityRange"
+            type="range"
+            min="0.05"
+            max="3.00"
+            step="0.01"
+            value="0.35"
+          />
+        </label>
+
+        <input
+          id="sensitivityNumber"
+          class="number-input"
+          type="number"
+          min="0.05"
+          max="3.00"
+          step="0.01"
+          value="0.35"
+        />
+
+        <p class="hint">
+          使用 Valorant 常见换算：每个鼠标增量 = Sens × 0.07°
+        </p>
+      </section>
+
+      <section class="setting-group">
+        <h2>准星</h2>
+
+        <label class="setting-row">
+          <span>样式</span>
+          <select id="crosshairType">
+            <option value="cross">经典十字</option>
+            <option value="dot">点准星</option>
+            <option value="crossdot">十字 + 中心点</option>
+            <option value="circle">圆点准星</option>
+            <option value="fourline">职业小十字</option>
+          </select>
+        </label>
+
+        <label class="setting-row">
+          <span>颜色</span>
+          <input id="crosshairColor" type="color" value="#00f5ff" />
+        </label>
+
+        <label class="setting-row">
+          <span>大小</span>
+          <input
+            id="crosshairSize"
+            type="range"
+            min="4"
+            max="60"
+            step="1"
+            value="4"
+          />
+        </label>
+
+        <label class="setting-row">
+          <span>粗细</span>
+          <input
+            id="crosshairThickness"
+            type="range"
+            min="1"
+            max="8"
+            step="1"
+            value="2"
+          />
+        </label>
+
+        <label class="setting-row">
+          <span>间距</span>
+          <input
+            id="crosshairGap"
+            type="range"
+            min="0"
+            max="28"
+            step="1"
+            value="6"
+          />
+        </label>
+      </section>
+
+      <section class="setting-group">
+        <h2>目标</h2>
+
+        <label class="setting-row">
+          <span>小球大小</span>
+          <input
+            id="targetSize"
+            type="range"
+            min="0.06"
+            max="1.00"
+            step="0.01"
+            value="0.10"
+          />
+        </label>
+
+        <p class="hint">
+          小球始终位于白色墙面范围内，并保持在同一垂直平面。
+        </p>
+      </section>
+
+      <section class="setting-group score-rule">
+        <h2>计分规则</h2>
+        <p>命中：基础分 + 连击奖励</p>
+        <p>空枪：扣分，并清空连击</p>
+        <p>时长：60 秒</p>
+      </section>
+    </aside>
+
+    <div id="endModal" class="modal hidden">
+      <div class="modal-card">
+        <h2>训练结束</h2>
+
+        <div class="result-grid">
+          <div>
+            <span>总分</span>
+            <strong id="finalScore">0</strong>
+          </div>
+          <div>
+            <span>命中</span>
+            <strong id="finalHits">0</strong>
+          </div>
+          <div>
+            <span>空枪</span>
+            <strong id="finalMisses">0</strong>
+          </div>
+          <div>
+            <span>命中率</span>
+            <strong id="finalAccuracy">0%</strong>
+          </div>
+          <div>
+            <span>最大连击</span>
+            <strong id="finalBestCombo">0</strong>
+          </div>
+        </div>
+
+        <button id="playAgainBtn" class="primary-btn">再来一局</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
